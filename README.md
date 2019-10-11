@@ -1,5 +1,5 @@
 # Name
-工具管理システム(tool_manegement)
+工具貸出管理ツール(tool_manegement)
 
 # Overview
 工具の貸出をGoogle App Scriptとgoogleスプレッドシートで管理するものです。
