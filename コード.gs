@@ -153,7 +153,7 @@ function uselistget(wrkid){
  return userlist;
 }
 
-
+//毎朝トリガから返却遅延者にメールを送る処理（未完
 function check(){
   // スプレッドシートの取得
   var ss = getval("list");
