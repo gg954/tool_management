@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<header>
+  <head>
+
+    <div class="lead-form">工具貸出フォーム公開版</div>
+    <div class="msg-area">公開版（ゾロ目3桁でログイン可能）</div>
+    <div class="msg-area">※IEは非対応（7/29追記）</div>
+    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+
+      <script type="text/javascript">
+        // ページの読み込み完了後に即実行する処理
+        window.onload=function loaduser(){
+          //従業員番号
+          var workerNo = document.body.te.value + document.body.num.value;
+          google.script.run.withSuccessHandler(viewworker).worker_check(workerNo);
+        }
+        
+        //貸出返却が押された時実行
+        function takeclick(){
+          //--入力された社員番号、チェック状況をコピー---        
+          var workerNo = document.body.te.value + document.body.num.value; //従業員番号
+          var checktools = document.getElementsByName("tool_select");       //選んだ工具のチェックボックス
+          const taketools = [];
+          
+          for(var i=0; i<checktools.length; i++){
+            taketools.push(checktools[i].checked);
+          }
+        
+          //備忘録: takeclick2(送り値) return返り値 -> clickmsg(takeclick2の返り値)  
+          google.script.run.withSuccessHandler(clickmsg).takeclick2(workerNo, taketools);
+        }
+        
+        function clickmsg(jadge){
+          if(jadge==0){
+            alert("従業員番号が見つかりません。\n登録されてない場合は管理者に問い合わせください。");
+            return;
+          }else{
+            var url=window.parent.document.referrer;
+            //urlにtidを含まないとき
+            if(url.indexOf('tid')== -1){
+              var id=document.body.num.value;
+              url=window.parent.document.referrer + "?tid=" +id;
+            }
+            alert("登録しました。");
+            window.top.location.href =url;
+          }
+        }
+        
+        //一括返却が押された時実行
+        function all_returnclick(){
+          //--入力された社員番号、チェック状況をコピー--->        
+          var workerNo = document.body.te.value + document.body.num.value; //従業員番号
+          var checktools = document.getElementsByName("tool_select");       //選んだ工具のチェックボックス
+         
+          const taketools = [];
+          
+          for(var i=0; i<checktools.length; i++){
+            taketools.push(checktools[i].checked);
+          }
+          
+          //備忘録: all_returnclick2(送り値) return返り値 -> clickmsg(takeclick2の返り値)  
+          google.script.run.withSuccessHandler(clickmsg).all_returnclick2(workerNo, taketools);
+          //document.getElementById("user_"+ i).style.backgroundColor = 'skyblue';
+        }
+        
+        
+        function workerNo_change(){
+          //--入力された社員番号、チェック状況をコピー---> 
+          var workerNo = document.body.te.value + document.body.num.value; //従業員番号
+          google.script.run.withSuccessHandler(viewworker).worker_check(workerNo);
+        }
+        
+        function viewworker(wrkid){
+          google.script.run.withSuccessHandler(viewworker2).uselistget(wrkid);
+        }
+        
+        function viewworker2(usrlist){
+          //最初の行はwrkidを格納
+          var wrkid=usrlist[0][0];
+          var wrkname=usrlist[0][1];
+          //wrkid行を削除
+          usrlist.shift();
+        
+          if(!wrkname){
+            document.getElementById("welcome_name").innerText= "　";
+          }else{
+            document.getElementById("welcome_name").innerText= "ようこそ "+wrkname+" さん";
+          }
+          
+          for(var i=0; i<usrlist.length; i++){
+            if(wrkid!=0){
+              if(usrlist[i][0]){
+                value="氏名:" + usrlist[i][1];
+              }else{
+                value= "";
+              }
+            }
+            document.getElementById("user_"+ i).innerText =value;
+            document.getElementById("state_"+ i).style.backgroundColor = 'white';
+            if(wrkid==usrlist[i][0]){
+              document.getElementById("state_"+ i).style.backgroundColor = '#f9cf00';
+            }
+          }
+        }
+      </script>
+  </head>
+</header>
+
+
+<body>
+  <form name=body onsubmit="return false;">
+    <div class="wrkNo">
+      <label for="num">社員番号：</label>
+      <select name="te">
+        <option value="t" selected>t</option>
+        <option value="e">e</option>
+      </select>
+
+      <input name="num" type="number" id="workers-num" onchange="workerNo_change();" value=<?=tid ?> >
+      <div class="wlcm_name" id="welcome_name">　</div>
+    </div>
+
+    <div class="btn-area">
+      <a href="javascript:takeclick();" class="btn-push1">持出/返却</a>
+      <a href="javascript:all_returnclick();" class="btn-push2">一括返却</a>
+    </div>
+
+    <div class="check-area">
+      <?
+ // スプレッドシートからデータを取得
+ var data = getval("list");
+ for(var i=0;i<data.length;i++){
+  ?>
+        <div class="can-toggle">
+          <? if(data[i][3]==='in'){ ?>
+            <input id=tool_<?=i ?> type="checkbox" name=tool_select>
+            <?
+     takeday="";
+     takevalue="";
+     ?>
+
+              <? }else{ ?>
+                <input id=tool_<?=i ?> type="checkbox" name=tool_select checked="checked">
+                <?
+     var date = new Date(data[i][4]);
+     takeday = Utilities.formatDate(date, 'Asia/Tokyo', 'MM/dd');
+     takevalue="貸出:";
+     ?>
+                  <? } ?>
+
+                    <label for=tool_<?=i ?>>
+      <div class="can-toggle__label-text"><b><?= data[i][1] ?></b></div>
+      <span style="line-height:100%;"class="state-area" id="state_<?= i ?>" >
+        <font size=2><?= takevalue ?><?= takeday ?> <div id=user_<?= i ?>></div></font>
+      </span>
+      <div class="can-toggle__switch" data-checked="持出" data-unchecked="返却"></div>
+    </label>
+        </div>
+        <?
+ }
+ ?>
+    </div>
+    <div class="btn-area">
+      <a href="javascript:takeclick();" class="btn-push1">持出/返却</a>
+      <a href="javascript:all_returnclick();" class="btn-push2">一括返却</a>
+    </div>
+
+    <br><br>
+  </form>
+</body>
+</html>
+

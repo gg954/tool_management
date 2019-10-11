@@ -1,0 +1,280 @@
+<style>
+
+body {
+	font-family: Verdana, Roboto, "Droid Sans", "游ゴシック", YuGothic, "メイリオ", Meiryo, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", sans-serif;
+}
+
+header {
+  background-color:#4484ce;
+  color:white;
+  height:95px;
+}
+
+.lead-form{
+  text-align: center;
+  font-size:30px;
+  font-weight:bold;
+  background-color:#4484ce;
+}
+
+form{
+  margin:0 auto;
+  font-size: 20px;
+}
+.item{
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.label{
+  float: left;
+  margin-right: 20px;
+  width:100px;
+  border-left: solid 3px #e0505d;
+  padding-left: 10px;
+  font-size: 20px;
+}
+.wlcm_name{
+  font-size: 14px;
+  text-align: center;
+}
+
+input[type="text"],input[type="number"]{
+  border: solid 1px #aaa;
+  border-radius:5px;
+  padding:10px;
+  font-size: 18px;
+  width:70px;
+  
+}
+select{
+  border: solid 1px #aaa;
+  border-radius:5px;
+  padding: 10px;
+  font-size: 18px;
+}
+.msg-area{
+  text-align: center;
+  font-size: 16px; 
+}
+.wrkNo{
+  text-align: center;
+  background-color:#d9d9d9;
+  padding:12px;
+  border: solid 1px #d9d9d9;
+}
+
+.state-area{
+  padding:0px 6px;
+}
+
+
+.btn-area{
+  text-align: center;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding:10px 0px;
+
+}
+
+.check-area{
+  
+}
+
+/* ここから下がボタンのCSS　*/
+/* ボタンのCSS　*/
+.btn-push1 {
+  background-color: #4484ce;
+  border: 2px solid #4484ce;
+  color: #fff;
+  line-height: 50px;
+  padding: 14px 24px;
+  border-radius: 8px; /* 角丸設定 */
+  text-decoration: none;
+  width: 95px; 
+}
+.btn-push1:hover {
+  background-color: #fff;
+  border-color: #4484ce;
+  color: #4484ce;
+}
+
+/* ボタンのCSS　*/
+.btn-push2 {
+  background-color: #fff;
+  border: 2px solid #4484ce;
+  color: #4484ce;
+  line-height: 50px;
+  padding: 14px 24px;
+  border-radius: 8px; /* 角丸設定 */
+  text-decoration: none;
+  width: 95px; 
+}
+.btn-push2:hover {
+  background-color: #4484ce;
+  border-color: #4484ce;
+  color: #fff;
+}
+
+.btn-push3 {
+  display: inline-block;
+  max-width: 180px;
+  width: 95px; 
+  text-align: center;
+  background-color: #668ad8;
+  font-size: 20px;
+  color: #FFF;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 4px;
+  border-bottom: 4px solid #627295;
+}
+
+.btn-push3:active {
+    transform: translateY(4px);
+    border-bottom: none;
+}
+
+
+
+/* トグルのCSS　*/
+.can-toggle {
+  position: relative;
+  padding:3px 0px;
+}
+.can-toggle *, .can-toggle *:before, .can-toggle *:after {
+  box-sizing: border-box;
+}
+.can-toggle input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.can-toggle input[type="checkbox"][disabled] ~ label {
+  pointer-events: none;
+}
+.can-toggle input[type="checkbox"][disabled] ~ label .can-toggle__switch {
+  opacity: 0.4;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:before {
+  content: attr(data-unchecked);
+  left: -2px;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  content: attr(data-checked);
+}
+.can-toggle label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.can-toggle label .can-toggle__label-text {
+  flex: 1;
+
+}
+.can-toggle label .can-toggle__switch {
+  position: relative;
+}
+.can-toggle label .can-toggle__switch:before {
+  content: attr(data-checked);
+  position: absolute;
+  top: 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+.can-toggle label .can-toggle__switch:after {
+  content: attr(data-unchecked);
+  position: absolute;
+  z-index: 5;
+  text-transform: uppercase;
+  text-align: center;
+  background: white;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.can-toggle input[type="checkbox"][disabled] ~ label {
+  color: rgba(119, 119, 119, 0.5);
+}
+.can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch {
+  background-color: #777;
+}
+.can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+  color: #5e5e5e;
+}
+.can-toggle input[type="checkbox"]:hover ~ label {
+  color: #6a6a6a;
+}
+.can-toggle input[type="checkbox"]:checked ~ label:hover {
+  color: #4484ce;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch {
+  background-color: #4484ce;
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  color: #4484ce;
+}
+.can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch {
+  background-color: #4484ce;
+}
+.can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+  color: #4484ce;
+}
+.can-toggle label .can-toggle__label-text {
+  flex: 1;
+  font-size: 16px;
+  <!-width: 150px;-->
+  padding:0px 6px;
+}
+.can-toggle label .can-toggle__switch {
+  transition: background-color 0.3s cubic-bezier(0, 1, 0.5, 1);
+  background: #848484;
+}
+.can-toggle label .can-toggle__switch:before {
+  color: #fff;
+}
+.can-toggle label .can-toggle__switch:after {
+  transition: -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+  transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+  transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1), -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+  color: #777;
+}
+.can-toggle input[type="checkbox"]:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:hover ~ label .can-toggle__switch:after {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
+  -webkit-transform: translate3d(55px, 0, 0);
+          transform: translate3d(55px, 0, 0);
+}
+.can-toggle input[type="checkbox"]:checked:focus ~ label .can-toggle__switch:after, .can-toggle input[type="checkbox"]:checked:hover ~ label .can-toggle__switch:after {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+}
+.can-toggle label {
+  font-size: 16px;
+}
+.can-toggle label .can-toggle__switch {
+  height: 36px;
+  flex: 0 0 114px;
+  border-radius: 4px;
+}
+.can-toggle label .can-toggle__switch:before {
+  left: 52px;
+  font-size: 16px;
+  line-height: 36px;
+  width: 67px;
+  padding: 0 16px;
+}
+.can-toggle label .can-toggle__switch:after {
+  top: 2px;
+  left: 2px;
+  border-radius: 2px;
+  width: 55px;
+  line-height: 32px;
+  font-size: 16px;
+}
+
+</style>
